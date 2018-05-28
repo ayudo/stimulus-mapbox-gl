@@ -85,15 +85,16 @@ export class MapboxController extends Controller {
       map.addControl(controls.scale)
     }
 
-    map.on('load', () => { this.__map_onLoad() })
+    map.on('load', () => { this.__onMapLoaded() })
   }
 
   disconnect() {
     this.__map.remove();
     this.__map = undefined;
+    if (this.onDisconnect) { this.onMapUnloaded() };
   }
 
-  __map_onLoad() {
+  __onMapLoaded() {
     var mapConfig = this.__mapConfig;
     var map = this.__map;
     Object.keys(mapConfig.datas || {}).forEach((id) => {
@@ -104,6 +105,7 @@ export class MapboxController extends Controller {
       console.log("adding layer", id, mapConfig.layers[id]);
       map.addLayer(Object.assign(mapConfig.layers[id], {id: id}))
     })
+    if (this.onMapLoaded) { this.onMapLoaded(map) };
   }
 
 }

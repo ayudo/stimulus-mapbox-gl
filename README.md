@@ -21,6 +21,15 @@ export default class extends MapboxController {
     return "https://some.tileserver.org/styles/"+style"/style.json";
   }
 
+
+  // Do something when the map has loaded.
+  onMapLoaded(map) {
+  }
+
+  // Cleanup if needed
+  onMapUnloaded(map) {
+  }
+
 }
 ```
 
