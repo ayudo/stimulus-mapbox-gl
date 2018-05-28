@@ -12,7 +12,9 @@ export class MapboxController extends Controller {
     }
 
     var defaults = Object.assign({
-      controls: {navigation: {}, attribution: {}},
+      controls: {
+        attribution: {}
+      },
       layers: {},
       sources: {}
     }, userDefaults);
@@ -43,47 +45,10 @@ export class MapboxController extends Controller {
 
     var map = this.__map;
 
-    // Navigation controls
-    if (mapConfig.controls.navigation) {
-      var options = Object.assign({
-        showCompass: true,
-        showZoom: true,
-        position: "top-right"
-      }, mapConfig.controls.navigation)
-      controls.navigation = new mapboxgl.NavigationControl();
-      map.addControl(controls.navigation, options.position);
-    }
-
-    // Attribution controls
-    if (mapConfig.controls.attribution) {
-      var options = Object.assign({
-        compact: true
-      }, mapConfig.controls.attribution);
-      controls.attribution = new mapboxgl.AttributionControl(options);
-      map.addControl(controls.attribution);
-    }
-
-    // Add geolocate control to the map.
-    if (mapConfig.controls.geolocate) {
-      var options = Object.assign({
-        positionOptions: {
-          enableHighAccuracy: true
-        },
-        trackUserLocation: true
-      }, mapConfig.controls.geolocation)
-      controls.geolocate = new mapboxgl.GeolocateControl(options);
-      map.addControl(controls.geolocateControl)
-    }
-
-    // Scale controls
-    if (mapConfig.controls.scale) {
-      var options = Object.assign({
-        maxWidth: 80,
-        unit: "metric"
-      }, mapConfig.controls.scale)
-      controls.scale = new mapboxgl.ScaleControl(options);
-      map.addControl(controls.scale)
-    }
+    this.__addControl("attribution");
+    this.__addControl("navigation");
+    this.__addControl("geolocate");
+    this.__addControl("scale");
 
     map.on('load', () => { this.__onMapLoaded() })
   }
@@ -107,6 +72,38 @@ export class MapboxController extends Controller {
     })
     if (this.onMapLoaded) { this.onMapLoaded(map) };
   }
+
+  __addControl(control) {
+    if (this.__mapConfig.controls[control]) {
+      var klass = null;
+      switch (control) {
+        case "navigation":
+          klass = mapboxgl.NavigationControl;
+          break;
+        case "attribution":
+          klass = mapboxgl.AttributionControl;
+          break;
+        case "scale":
+          klass = mapboxgl.ScaleControl;
+          break
+        case "geolocate":
+          klass = mapboxgl.GeolocateControl;
+          break
+        default:
+          null
+      }
+      var options = this.__mapConfig.controls[control];
+      console.log("adding control", control, options);
+      var ctrl = this.__controls[control] = new klass(options);
+      if (options.position) {
+        this.__map.addControl(ctrl, options.position);
+      } else {
+        this.__map.addControl(ctrl);
+      }
+    }
+  }
+
+
 
 }
 
