@@ -39,6 +39,10 @@ export class MapboxController extends Controller {
 
     console.log("adding map", mapConfig);
 
+    if (mapConfig.accessToken) {
+      mapboxgl.accessToken = mapConfig.accessToken;
+    }
+
     this.__map = new mapboxgl.Map(Object.assign(mapConfig, {
       container: this.element
     }));

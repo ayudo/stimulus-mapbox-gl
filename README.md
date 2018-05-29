@@ -21,7 +21,6 @@ export default class extends MapboxController {
     return "https://some.tileserver.org/styles/"+style"/style.json";
   }
 
-
   // Do something when the map has loaded.
   onMapLoaded(map) {
   }
@@ -39,6 +38,7 @@ export default class extends MapboxController {
 
 The JSON configuration object is similar to the object you'll pass to `mapboxgl.Map()`, with a few notable additions:
 
+* `accessToken`,
 * `style` can be expanded by the `getStyleUrl()` callback,
 * `sources` can be an object of multiples sources you'd normally add with `map.addSource`,
 * `layers` can be an object of multiples layers you'd normally add with `map.addLayer`,
