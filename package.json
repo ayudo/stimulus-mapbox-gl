@@ -1,6 +1,6 @@
 {
   "name": "stimulus-mapbox-gl",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "description": "Stimulus controllers for Mapbox GL",
   "repository": "https://github.com/ayudo/stimulus-mapbox-gl",
   "license": "MIT",
@@ -9,8 +9,41 @@
     "Jordan Bracco <self@jordan.io>",
     "Damien Houlle <d@ayu.do>"
   ],
+  "scripts": {
+    "build": "webpack --env dev && webpack --env build",
+    "prepublishOnly": "npm run build"
+  },
+  "main": "dist/stimulus-mapbox-gl.min.js",
+  "source": "src/index.js",
+  "babel": {
+    "plugins": [
+      "transform-class-properties",
+      "transform-runtime"
+    ],
+    "presets": [
+      [
+        "env",
+        {
+          "modules": false
+        }
+      ]
+    ]
+  },
   "dependencies": {
     "mapbox-gl": "^0.45.0",
-    "@stimulus/core": "^1.0.1"
+    "stimulus": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "webpack": "^4.10.0",
+    "webpack-cli": "^2.1.4"
   }
 }
