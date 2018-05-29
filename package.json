@@ -1,8 +1,8 @@
 {
   "name": "stimulus-mapbox-gl",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Stimulus controllers for Mapbox GL",
-  "repository": "https://git.ayu.do/ng/web/stimulus-mapbox-gl",
+  "repository": "https://github.com/ayudo/stimulus-mapbox-gl",
   "license": "MIT",
   "author": "AYUDO SAS",
   "contributors": [
