@@ -12,6 +12,7 @@ export class MapboxController extends Controller {
     }
 
     var defaults = Object.assign({
+      attributionControl: false,
       controls: {
         attribution: {}
       },
