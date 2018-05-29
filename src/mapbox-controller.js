@@ -53,6 +53,7 @@ export class MapboxController extends Controller {
     this.__addControl("navigation");
     this.__addControl("geolocate");
     this.__addControl("scale");
+    this.__addControl("fullscreen");
 
     map.on('load', () => { this.__onMapLoaded() })
   }
@@ -93,17 +94,16 @@ export class MapboxController extends Controller {
         case "geolocate":
           klass = mapboxgl.GeolocateControl;
           break
+        case "fullscreen":
+          klass = mapboxgl.FullscreenControl;
+          break
         default:
           null
       }
       var options = this.__mapConfig.controls[control];
       console.log("adding control", control, options);
       var ctrl = this.__controls[control] = new klass(options);
-      if (options.position) {
-        this.__map.addControl(ctrl, options.position);
-      } else {
-        this.__map.addControl(ctrl);
-      }
+      this.__map.addControl(ctrl, options.position);
     }
   }
 
